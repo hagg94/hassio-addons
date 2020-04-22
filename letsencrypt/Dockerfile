@@ -9,6 +9,7 @@ RUN apk add --no-cache --update \
         libffi \
         musl \
         openssl \
+        wget \
     && apk add --no-cache --virtual .build-dependencies \
         g++ \
         libffi-dev \
@@ -36,3 +37,5 @@ RUN apk add --no-cache --update \
 
 # Copy data
 COPY rootfs /
+
+RUN chmod a+x /url-auth-hook.sh

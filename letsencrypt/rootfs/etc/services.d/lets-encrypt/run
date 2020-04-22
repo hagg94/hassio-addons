@@ -63,6 +63,12 @@ elif [ "${DNS_PROVIDER}" == "dns-cloudflare" ]; then
 
     PROVIDER_ARGUMENTS+=("--${DNS_PROVIDER}" "--${DNS_PROVIDER}-credentials" /data/dnsapikey "--dns-cloudflare-propagation-seconds" "${PROPAGATION_SECONDS}")
 
+# DNS Hook
+elif [ "${DNS_PROVIDER}" == "dns-url-hook" ]; then
+    export DNS_URL_HOOK=$(bashio::config 'dns.dns_url_hook')
+    export PROPAGATION_SECONDS=PROPAGATION_SECONDS
+    PROVIDER_ARGUMENTS+=("--manual-public-ip-logging-ok" "--manual" "--manual-auth-hook" "/url-auth-hook.sh")
+
 #All others
 else
     PROVIDER_ARGUMENTS+=("--${DNS_PROVIDER}" "--${DNS_PROVIDER}-credentials" /data/dnsapikey)
